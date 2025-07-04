@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/969b364b0b.js" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: black;">
+<nav style="background-color: black;">
+    <a href="home.html">
+  <img src="images/Logo.png" class="logo" alt="Logo"></a>
+    <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="images/GabriellaTorresSantiago-7788.jpg" alt="About Me">
+            </div>
+            <div class="about-col-2">
+                <h1 class="sub-title">About Me</h1>
+                <p>
+                    As a recent graduate of the <span>University of South Carolina Upstate</span>, my goal is to bring something new to the table. 
+                    Graduating with a degree in <span>Computer Science and a minor in Creative Writing</span>, my education allows me to be flexible in all areas.
+                    My aspirations are in <span>Web Development</span>, however I would love the opportunity to learn roles in <span>Application Development</span>, or even <span>Software Development</span>.
+                    I currently work part-time for my university as a <span>Power Platforms Application Developer</span> while I continue to grow my skills and wait for the perfect opportunity!
+                </p>
+
+                <div class="tab-titles">
+                    <p class="tab-links active-link" onclick="opentab('experience')">Experience</p>
+                    <p class="tab-links" onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links" onclick="opentab('education')">Education</p>
+                    <p class="tab-links" onclick="opentab('organizations')">Clubs and Organizations</p>
+                </div>
+
+                <div class="tab-contents active-tab" id="experience">
+                    <ul>
+                        <li><span>Power Platforms Application Developer | University of South Carolina Upstate<br>January 2024 – Present</span><br>
+                            <em>Develop extensive Power Apps for university use<br>
+                            Create and manage SharePoint Lists<br>
+                            Create Power Automate flows for Microsoft Forms submissions, Teams approvals, and SharePoint list submissions<br>
+                            Develop and code SPFX webparts and adaptive cards<br>
+                            Document all work extensively so future workers can easily pick up projects
+                        </li><br></em>
+                        <li><span>Software Intern | Spartan Technology Solutions<br>September 2023 – January 2024</span><br>
+                            <em>Coded templates from a database of merge fields<br>
+                            Created templates based on customer requests<br>
+                            Tested and checked around 20 templates a day<br>
+                            Communicated with 3+ clients daily<br>
+                            Assisted with data conversion to custom software
+                        </li><br></em>
+                        <li><span>IT Helpdesk Technician | University of South Carolina Upstate<br>August 2022 – May 2024</span><br>
+                            <em>Assisted users via phone and email<br>
+                            Reimaged and set up loaner and faculty laptops<br>
+                            Documented issues using SharePoint Lists<br>
+                            Used Azure and remote services for account/device support
+                        </li><br></em>
+                        <li><span>Cashier Manager | Paisano's Duncan<br>July 2020 – October 2021</span><br>
+                            <em>Took orders in person and over the phone<br>
+                            Addressed customer concerns<br>
+                            Managed front-of-house staff<br>
+                            Opened/closed the restaurant and tracked finances
+                        </li></em>
+                    </ul>
+                </div>
+
+                <div class="tab-contents" id="skills">
+                    <ul>
+                        <li><span>Applications</span>
+                            <em><ul>
+                                <li>Power Automate</li>
+                                <li>Power Apps</li>
+                                <li>SharePoint</li>
+                                <li>Office 365 Suite - Words, Excel, PowerPoint, Outlook</li>
+                                <li>Remote Working Technologies - Zoom, Teams, Google Drive, OneDrive</li>
+                            </ul></em>
+                        </li><br>
+                        <li><span>Various Coding Languages</span>
+                            <em><ul>
+                                <li>HTML/CSS/JavaScript</li>
+                                <li>Java</li>
+                                <li>TypeScript</li>
+                                <li>Python</li>
+                                <li>Currently learning: SQL and C#</li>
+                            </ul></em>
+                        </li><br>
+                        <li><span>Soft Skills</span>
+                            <em><ul>
+                                <li>Management</li>
+                                <li>Organizational Skills</li>
+                                <li>Communication</li>
+                                <li>Attention to Detail</li>
+                                <li>Flexibility</li>
+                                <li>Collaboration</li>
+                            </ul></em>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>Bachelor of Science in Computer Science, Minor in Creative Writing</span><br>
+                           <em> University of South Carolina Upstate<br> August 2021 - May 2025<br>3.4 GPA
+                        </em></li><br>
+                        <li><span>High School Diploma</span><br>
+                            <em>James F. Byrnes High School<br>August 2017 - May 2021<br>3.8 GPA
+                        </em></li><br>
+                        <li><span>Certification in Graphic Design and Commercial Graphics</span><br>
+                           <em> RD Anderson Applied Tech Center<br>August 2019 - May 2021
+                        </li></em>
+                    </ul>
+                </div>
+
+                <div class="tab-contents" id="organizations">
+    <ul>
+        <li>
+            <span>Computer Science Club</span><br>
+            Vice President, Secretary, Treasurer<br>
+            August 2023 – May 2024<br>
+            <em>Held multiple leadership roles, contributing to event planning, budgeting, and organizational communication to support club growth and engagement.</em>
+        </li><br>
+        <li>
+            <span>Mentor Collective</span><br>
+            Student Success Mentor<br>
+            August 2024 – May 2025<br>
+            <em>Mentored two students, offering guidance in both academic and personal development to support their overall success and well-being.</em>
+        </li><br>
+        <li>
+            <span>S.E.E.D.S.</span><br>
+            Student Worker<br>
+            August 2023 – April 2024<br>
+            <em>Participated in a professional development program focused on time management, teamwork, and workplace skills essential for student success.</em>
+        </li>
+    </ul>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- -----------Javascript----------- -->
+<script src="functions.js"></script>
+</body>
+</html>

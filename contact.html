@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/969b364b0b.js" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: black;">
+
+<nav style="background-color: black">
+    <a href="home.html">
+  <img src="images/Logo.png" class="logo" alt="Logo"></a>
+    <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div id="contact">
+    <div class="container">
+        <h1 class="sub-title" style="text-align: center;">Get in touch!</h1><br><br>
+        <div class="row">
+            <div class="contact-left">
+                <h3 class="subInfo">General Info</h3>
+                <p><i class="fa-solid fa-paper-plane"></i> gtorres7456@outlook.com</p>
+                <p><i class="fa-solid fa-square-phone"></i> (864) 720-9116</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/gabriella-torres-santiago-b42a33237/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/gntorress" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://uscupstate.joinhandshake.com/profiles/czgdqa" target="_blank"><i class="fa-regular fa-handshake"></i></a>
+                </div><br>
+                <a href="gtorress_Resume.pdf" target="_blank" download class="btn btn2">Download PDF Resume</a>
+            </div>
+            <div class="contact-right">
+                <form name="submit-to-google-sheet">
+                    <input type="text" name="Name" placeholder="Your name" required>
+                    <input type="email" name="Email" placeholder="Your email" required>
+
+                    <!-- Dropdown menu -->
+                    <select id="dropdownMenu" name="dropdownMenu" required>
+                        <option value="" disabled selected hidden>What would you like to contact me about?</option>
+                        <option value="internship">Internship Opportunity</option>
+                        <option value="job-offer">Job Opportunity</option>
+                        <option value="freelance-work">Freelance Work</option>
+                        <option value="question">Questions</option>
+                        <option value="other">Just to say hi!</option>
+                    </select>
+
+                    <textarea name="Message" rows="6" placeholder="Your message here"></textarea>              
+                    <button type="submit" class="btn btn2">Submit</button>
+                </form>
+                <span id="msg">Your message has been sent!</span>
+            </div>                
+        </div>
+    </div>
+</div>
+
+<!-- -----------Javascript----------- -->
+<script src="functions.js"></script>
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzz4uTj1SfPxk44DH8EdhrSqRLFuwMBvTJRvkIs9owhvceZ_drM1VhpxRZC4qfEM0u0FA/exec';
+const form = document.forms['submit-to-google-sheet'];
+const msg = document.getElementById("msg");
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    .then(response => {
+      msg.style.display = "inline"; // Show the message
+      msg.innerHTML = "Your message has been submitted!";
+      setTimeout(function() {
+        msg.style.display = "none"; // Hide it after 5 seconds
+        msg.innerHTML = "";
+      }, 5000);
+      form.reset();
+    })
+    .catch(error => console.error('Error!', error.message));
+});
+</script>
+
+</body>
+</html>
