@@ -399,7 +399,7 @@ span {
 }
 
 .btn.btn2:visited {
-    color: #39FF14;
+    color: #ae02f1;
 }
 
 .btn2 {
@@ -422,7 +422,7 @@ form input, form textarea, select {
     background: #262626;
     padding: 15px;
     margin: 15px 0;
-    color: #747474;
+    color: #ffffff;
     font-size: 18px;
     border-radius: 6px;
     resize: none;
