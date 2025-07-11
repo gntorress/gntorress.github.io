@@ -139,7 +139,15 @@ document.querySelectorAll('.project-description').forEach(desc => {
   }
 });
 
+//fade in
+window.addEventListener('DOMContentLoaded', () => {
+  const layout = document.querySelector('.projects-layout');
+  if (layout) {
+    layout.classList.add('fade-in');
+  }
+});
 
+//popup
 function showModalFromProject(projectBox) {
   const modal = document.getElementById('modal');
   const modalContent = document.getElementById('modal-content');
