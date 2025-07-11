@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="games">
+<body>
   <!-- HEADER NAVIGATION -->
   <div id="header">
     <div class="container">
@@ -27,6 +27,38 @@
     </div>
   </div>
 
+  <div class="game-section">
+    <h2>Catch the Button!</h2>
+    <div class="game-container">
+        <button id="click-me">Click me!</button>
+    </div>
+    <p id="score">Score: 0</p>
+  </div>
+
 <script src="functions.js"></script>
+<script>
+  const button = document.getElementById("click-me");
+  const container = document.querySelector(".game-container");
+  const scoreDisplay = document.getElementById("score");
+  let score = 0;
+
+  button.addEventListener("click", () => {
+    score++;
+    scoreDisplay.textContent = "Score: " + score;
+
+    const containerRect = container.getBoundingClientRect();
+    const btnSize = 60;
+
+    const maxX = container.clientWidth - btnSize;
+    const maxY = container.clientHeight - btnSize;
+
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+
+    button.style.left = `${randX}px`;
+    button.style.top = `${randY}px`;
+  });
+</script>
+
 </body>
 </html>
