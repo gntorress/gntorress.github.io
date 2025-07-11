@@ -116,6 +116,27 @@
 
 <!-- JavaScript -->
 <script>
+//project menu filter
+const buttons = document.querySelectorAll('.project-filter');
+const boxes = document.querySelectorAll('.project-box');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelector('.project-filter.active').classList.remove('active');
+    button.classList.add('active');
+    const filter = button.getAttribute('data-filter');
+
+    boxes.forEach(box => {
+      if (filter === 'all' || box.classList.contains(filter)) {
+        box.style.display = 'block';
+      } else {
+        box.style.display = 'none';
+      }
+    });
+  });
+});
+
+//functionality for preview/wordcount/read more
 const MAX_LENGTH = 150;
 
 document.querySelectorAll('.project-description').forEach(desc => {
@@ -139,13 +160,6 @@ document.querySelectorAll('.project-description').forEach(desc => {
   }
 });
 
-//fade in
-window.addEventListener('DOMContentLoaded', () => {
-  const layout = document.querySelector('.projects-layout');
-  if (layout) {
-    layout.classList.add('fade-in');
-  }
-});
 
 //popup
 function showModalFromProject(projectBox) {

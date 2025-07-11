@@ -28,7 +28,34 @@
         </div>
     </div>
 
-   <!-- -----------Javascript----------- -->
-    <script src="functions.js"></script>
+<!-- -----------Javascript----------- -->
+<script>
+// Typewriter functionality
+const text = "Gabriella Torres-Santiago!";
+const speed = 65;
+
+function typeWriter(text, i, fnCallback) {
+    if (i < text.length) {
+        // Add next character to the typed text span
+        document.getElementById("typed-text").innerHTML += text.charAt(i);
+        i++;
+        // Wait before typing the next character
+        setTimeout(function () {
+            typeWriter(text, i, fnCallback);
+        }, speed);
+     } else if (fnCallback) {
+        // Call callback function after text has been fully typed
+        fnCallback();
+    }
+}
+
+// Start the typing effect
+document.addEventListener('DOMContentLoaded', function () {
+    typeWriter(text, 0, function () {
+        console.log("Typing effect completed.");
+    });
+});
+</script>
+
 </body>
 </html>
