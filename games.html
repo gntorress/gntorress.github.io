@@ -1,39 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Games</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/969b364b0b.js" crossorigin="anonymous"></script>
 </head>
+<body style="background-color: black;">
 
-<body>
-  <!-- HEADER NAVIGATION -->
-  <div id="header">
-    <div class="container">
-      <nav>
-        <a href="index.html">
-          <img src="images/logo.png" class="logo" alt="Logo" />
-        </a>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="games.html">Games</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
+<nav style="background-color: black">
+    <a href="index.html">
+<img src="images/logo.png" class="logo" alt="Logo"></a>  
+<ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="games.html">Games</a></li>
+  </ul>
+</nav>
 
+<!--click the button-->
   <div class="game-section">
     <h2>Catch the Button!</h2>
+    <div class="instructions-click"><br>
+        <p>This is a very simple clicking game made with just html/css/javascript. Each time the page reloads, it will restart the game. 
+            <span id=warning><strong>WARNING:</strong></span> this game ends with slow flashing lights. If you are sensitive to this, please do not click to 60.</p><br>
+    </div>
     <div class="game-container">
         <button id="click-me">Click me!</button>
     </div>
     <p id="score">Score: 0</p>
   </div>
+
+<hr class="solid">
+
+<!--memory match-->
+<div class="game-section">
+    <h2>Memory Match Game</h2>
+    <div class="memory-game">
+        <!-- Cards will go here -->
+    </div>
+    <p id="match-status">Score: 0</p>
+        <button id="reset-memory-game">Reset Game</button>
+</div>
+
 
 <script src="functions.js"></script>
 <script>
@@ -41,10 +54,56 @@
   const container = document.querySelector(".game-container");
   const scoreDisplay = document.getElementById("score");
   let score = 0;
+  let bouncing = false;
+  let bounceInterval;
 
   button.addEventListener("click", () => {
     score++;
     scoreDisplay.textContent = "Score: " + score;
+
+    // Update button text at milestones
+    if (score >= 10 && score < 20) {
+      button.textContent = "Keep going!";
+    } else if (score >= 20 && score < 30) {
+      button.textContent = "So close!";
+    } else if (score >= 30 && score < 40) {
+      button.textContent = "Still going?";
+    } else if (score >= 40 && score < 50) {
+      button.textContent = "Ok keep clicking for a surprise!";
+    } else if (score >= 50 && score < 60) {
+      button.textContent = "Here it comes!";
+    } else if (score >= 60 && !bouncing) {
+      button.textContent = "🎉 Party time! 🎉";
+      startRainbowParty();
+    }
+
+    if (!bouncing) {
+      moveButtonRandomly();
+    }
+  });
+
+  function moveButtonRandomly() {
+    const btnSize = button.offsetWidth;
+    const maxX = container.clientWidth - btnSize;
+    const maxY = container.clientHeight - button.offsetHeight;
+
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+
+    button.style.left = `${randX}px`;
+    button.style.top = `${randY}px`;
+  }
+
+  function startRainbowParty() {
+    bouncing = true;
+
+    // Add rainbow class to button and container
+    button.classList.add("rainbow");
+    container.classList.add("rainbow");
+
+    // Start bouncing
+    bounceInterval = setInterval(moveButtonRandomly, 400);
+  }
 
     const containerRect = container.getBoundingClientRect();
     const btnSize = 60;
@@ -57,7 +116,96 @@
 
     button.style.left = `${randX}px`;
     button.style.top = `${randY}px`;
-  });
+
+//memory game
+function setupMemoryGame() {
+    const gameBoard = document.querySelector(".memory-game");
+    const status = document.getElementById("match-status");
+    const images = [
+        "image-1.jpg", "image-1.jpg",
+        "image-2.jpg", "image-2.jpg",
+        "image-3.jpg", "image-3.jpg",
+        "image-4.jpg", "image-4.jpg",
+        "image-5.jpg", "image-5.jpg",
+        "image-6.jpg", "image-6.jpg",
+        "image-7.jpg", "image-7.jpg",
+        "image-8.jpg", "image-8.jpg",
+    ];
+
+    const shuffled = [...images].sort(() => 0.5 - Math.random());
+    gameBoard.innerHTML = ""; // Clear previous game
+    status.textContent = "Score: 0";
+
+    let flippedCards = [];
+    let matchedPairs = 0;
+
+    function createCard(imageSRC, index) {
+        const card = document.createElement("div");
+        card.classList.add("memory-card");
+        card.dataset.image = imageSRC;
+        card.dataset.index = index;
+
+        const img = document.createElement("img");
+        img.src = `assets/${imageSRC}`; 
+        img.alt = "";
+        img.style.display = "none";
+        img.classList.add("card-image");
+
+        card.appendChild(img);
+        return card;
+    }
+
+    // Create cards
+    shuffled.forEach((imgName, i) => {
+        const card = createCard(imgName, i);
+        gameBoard.appendChild(card);
+    });
+
+    gameBoard.addEventListener("click", (e) => {
+        const card = e.target.closest(".memory-card");
+        if (
+            !card ||
+            card.classList.contains("flipped") ||
+            card.classList.contains("matched") ||
+            flippedCards.length >= 2
+        ) return;
+
+        const img = card.querySelector("img");
+        img.style.display = "block";
+        card.classList.add("flipped");
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+            const [first, second] = flippedCards;
+            if (first.dataset.image === second.dataset.image) {
+                first.classList.add("matched");
+                second.classList.add("matched");
+                matchedPairs++;
+                status.textContent = `Score: ${matchedPairs}`;
+                if (matchedPairs === images.length / 2) {
+                    status.textContent = "You matched everything!";
+                }
+                flippedCards = [];
+            } else {
+                setTimeout(() => {
+                    first.querySelector("img").style.display = "none";
+                    second.querySelector("img").style.display = "none";
+                    first.classList.remove("flipped");
+                    second.classList.remove("flipped"); 
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+    });
+}
+
+// Hook up reset button
+document.getElementById("reset-memory-game").addEventListener("click", setupMemoryGame);
+
+// Run once on load
+setupMemoryGame();
+
+
 </script>
 
 </body>
