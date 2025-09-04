@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +13,13 @@
 
 <nav style="background-color: black">
     <a href="index.html">
-  <img src="images/Logo.png" class="logo" alt="Logo"></a>
-  <ul>
+<img src="images/logo.png" class="logo" alt="Logo"></a>  
+<ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="games.html">Games</a></li>
   </ul>
 </nav>
 
@@ -45,18 +47,18 @@
             If you would like to see my (very messy) code, or read my research paper, see the links below.
           </p>
           <div class="project-icons" style="text-align: center;">
-            <a href="https://github.com/gntorress/senior-sem"><i class="fa-brands fa-github"></i></a>
+            <a href="https://github.com/gntorress/senior-sem" target="_blank"><i class="fa-brands fa-github"></i></a>
             <a href="SeniorSem Paper.pdf" target="_blank"><i class="fa-solid fa-download"></i></a>
           </div>
         </div>
 
         <div class="project-box personal">
           <h3>Portfolio Website</h3>
-          <p class="project-description">The website you are on right now is one of many attempts at a porfolio website. While the functions/layouts are generally the same, I cannot decide 
-            what kind of style to do. If you would like to view the code for it, click below!
+          <p class="project-description">The website you are on right now is one of many attempts at a porfolio website. While the functions/layouts are 
+            generally the same, I cannot decide what kind of style to do. If you would like to view the code for it, click below!
           </p>
           <div class="project-icons" style="text-align: center;">
-            <a href="https://github.com/gntorress/gntorress.github.io"><i class="fa-brands fa-github"></i></a>
+            <a href="https://github.com/gntorress/gntorress.github.io" target="_blank"><i class="fa-brands fa-github"></i></a>
           </div>
         </div>
 
@@ -67,27 +69,45 @@
             the full code, view a template below!
           </p>
           <div class="project-icons" style="text-align: center;">
-            <a href="https://github.com/gntorress"><i class="fa-brands fa-github"></i></a>
+            <a href="https://github.com/gntorress/adaptivecard_ticket" target="_blank"><i class="fa-brands fa-github"></i></a>
           </div>
         </div>
 
         <div class="project-box work">
-          <h3>Forms Repo</h3>
-          <p class="project-description">The development team I worked with created a "Forms Repository" webpart. This repo held all of the universities forms, categorized by department. I updated the
-            property pane for easy configuration when using as a website, as well as updated the styling to look more clean. The repo is used by all students, staff, and faculty each day!
+          <h3>Forms Repository</h3>
+          <p class="project-description">The development team I worked with created a "Forms Repository" webpart. This repo held all of the universities forms, categorized by department. 
+            I updated the property pane for easy configuration when using as a webpart, as well as updated the styling to look more clean. The repo is used by all students, staff, and faculty each day!
           </p>
         </div>
 
         <div class="project-box school">
           <h3>Facial Detection Robot</h3>
-          <p class="project-description">This description is also short.</p>
+          <p class="project-description">For my Computer Architecture class, me and three other classmates created a facial recognition bot, with the physical components coming from a kit.
+            The bot would look at a person, lock in on them, then give a prediction on who they thing it is. I was the main coder for the facial recognition, and I modeled the code using 
+            the below repo on GitHub.
+          </p>
+          <div class="project-icons" style="text-align: center;">
+            <a href="https://github.com/Ymanawat/FaceRecognizer" target="_blank"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+        <div class="project-box school">
+          <h3>Pet Matching Website</h3>
+          <p class="project-description">For my Software Engineering class, in a 6 person group project, we created a pet matching website to match users to a pet that would fit them the most, using 
+            the roster from the Spartanburg Humane Society. While one of our groups members was the main creator of the backend, using SQL to create a database, the rest of us were in charge of the 
+            frontend. In this class, learned SCRUM and Sprint methods, dividing up the work and creating times for us to check in with each other on our pieces.
+          <div class="project-icons" style="text-align: center;">
+            <a href="https://github.com/gntorress" target="_blank"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Popup -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <span class="close" onclick="closeModal()">&times;</span>
@@ -98,6 +118,27 @@
 
 <!-- JavaScript -->
 <script>
+//project menu filter
+const buttons = document.querySelectorAll('.project-filter');
+const boxes = document.querySelectorAll('.project-box');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelector('.project-filter.active').classList.remove('active');
+    button.classList.add('active');
+    const filter = button.getAttribute('data-filter');
+
+    boxes.forEach(box => {
+      if (filter === 'all' || box.classList.contains(filter)) {
+        box.style.display = 'block';
+      } else {
+        box.style.display = 'none';
+      }
+    });
+  });
+});
+
+//functionality for preview/wordcount/read more
 const MAX_LENGTH = 150;
 
 document.querySelectorAll('.project-description').forEach(desc => {
@@ -122,6 +163,7 @@ document.querySelectorAll('.project-description').forEach(desc => {
 });
 
 
+//popup
 function showModalFromProject(projectBox) {
   const modal = document.getElementById('modal');
   const modalContent = document.getElementById('modal-content');
