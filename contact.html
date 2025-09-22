@@ -68,14 +68,15 @@
   const msg = document.getElementById('msg');
   const submitBtn = document.getElementById('submitBtn');
 
-  // Track time on page to reduce instant bot submits
   const firstSeen = Date.now();
 
-  function showMessage(text, ok = true) {
+  function showMessage(text, ok = true, persistMs = 5000) {
     msg.style.display = 'inline';
     msg.style.color = ok ? '#7CFC00' : '#ff6b6b';
     msg.textContent = text;
-    setTimeout(() => { msg.style.display = 'none'; msg.textContent = ''; }, 5000);
+    if (persistMs > 0) {
+      setTimeout(() => { msg.style.display = 'none'; msg.textContent = ''; }, persistMs);
+    }
   }
 
   function looksSpammy(text) {
@@ -87,32 +88,57 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Native required validation UI
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     submitBtn.disabled = true;
 
-    // Time-on-page (>= 5s)
+    // Time-on-page (>= 2s) — lowered so it doesn't get in your way
     const elapsed = Date.now() - firstSeen;
-    if (elapsed < 5000) {
+    if (elapsed < 2000) {
+      showMessage('Please wait a moment before submitting.', false);
       submitBtn.disabled = false;
       return;
     }
 
-    const topic = form.querySelector('select[name="dropdownMenu"]')?.value || '';
-    const message = form.querySelector('textarea[name="Message"]')?.value || '';
+    const topicEl = form.querySelector('select[name="dropdownMenu"]');
+    const messageEl = form.querySelector('textarea[name="Message"]');
+    const topic = topicEl?.value || '';
+    const message = messageEl?.value || '';
 
-    if (!topic) { submitBtn.disabled = false; return; }
-    if (message.trim().length < 20 || message.trim().length > 3000 || looksSpammy(message)) {
+    if (!topic) {
+      showMessage('Please choose a topic.', false);
+      topicEl.focus();
       submitBtn.disabled = false;
       return;
     }
 
-    const fd = new FormData(form);
+    if (message.trim().length < 20) {
+      showMessage('Please add a bit more detail (≥ 20 characters).', false);
+      messageEl.focus();
+      submitBtn.disabled = false;
+      return;
+    }
+
+    if (looksSpammy(message)) {
+      showMessage('Your message looks like spam. Please revise.', false);
+      submitBtn.disabled = false;
+      return;
+    }
+
+    showMessage('Sending…', true, 0);
 
     try {
+      const fd = new FormData(form);
       const res = await fetch(scriptURL, { method: 'POST', body: fd });
       const text = (await res.text()).trim().toLowerCase();
 
       if (text === 'ok' || text === 'success') {
-        showMessage('Your message has been sent! Thank you for contacting me!', true);
+        showMessage('Your message has been sent! Thank you!', true);
         form.reset();
       } else {
         showMessage('Sorry—your message could not be sent. Please try again.', false);
@@ -125,5 +151,6 @@
     }
   });
 </script>
+<script src="functions.js"></script>
 </body>
 </html>
