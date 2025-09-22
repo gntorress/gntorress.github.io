@@ -44,18 +44,10 @@
           <!-- Dropdown menu -->
           <select id="dropdownMenu" name="dropdownMenu" required>
             <option value="" disabled selected hidden>What would you like to contact me about?</option>
-            <option value="internship">Internship Opportunity</option>
             <option value="job-offer">Job Opportunity</option>
-            <option value="freelance-work">Freelance Work</option>
             <option value="question">Questions</option>
             <option value="other">Just to say hi!</option>
           </select>
-
-          <!-- Honeypot (hidden from humans; visible to bots) -->
-          <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
-            <label for="website">Leave this field empty</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
-          </div>
 
           <textarea name="Message" rows="6" placeholder="Your message here"></textarea>
           <button type="submit" class="btn btn2" id="submitBtn">Submit</button>
@@ -69,17 +61,16 @@
 <!-- -----------Javascript----------- -->
 <script>
   // ====== CONFIG ======
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbxc8EVXnehURvm_j-SJwPWs2aCpdgAap4TuDp9pB7mpkFRZ6NptHoYi_bkGN-ZFGbwzvw/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwvZqm0TpLqUZo4PpsXKMATjtU3gUulVm0MeEft5TcgilIWeuBcHENxnx498yLXAgLR/exec';
 
   // ====== ELEMENTS ======
   const form = document.forms['submit-to-google-sheet'];
   const msg = document.getElementById('msg');
   const submitBtn = document.getElementById('submitBtn');
 
-  // Track time on page to block instant bot submits
+  // Track time on page to reduce instant bot submits
   const firstSeen = Date.now();
 
-  // Helper: show message
   function showMessage(text, ok = true) {
     msg.style.display = 'inline';
     msg.style.color = ok ? '#7CFC00' : '#ff6b6b';
@@ -87,7 +78,6 @@
     setTimeout(() => { msg.style.display = 'none'; msg.textContent = ''; }, 5000);
   }
 
-  // Basic spam/content checks
   function looksSpammy(text) {
     const links = (text.match(/https?:\/\//gi) || []).length;
     const badPhrases = [/crypto/i, /loan/i, /forex/i, /adult/i, /seo backlinks?/i];
@@ -97,16 +87,7 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    // Disable button to prevent double submits
     submitBtn.disabled = true;
-
-    // Honeypot
-    const honey = form.querySelector('#website');
-    if (honey && honey.value.trim() !== '') {
-      submitBtn.disabled = false;
-      return; // likely bot
-    }
 
     // Time-on-page (>= 5s)
     const elapsed = Date.now() - firstSeen;
@@ -115,17 +96,17 @@
       return;
     }
 
-    // Required/quality checks
     const topic = form.querySelector('select[name="dropdownMenu"]')?.value || '';
     const message = form.querySelector('textarea[name="Message"]')?.value || '';
+
     if (!topic) { submitBtn.disabled = false; return; }
     if (message.trim().length < 20 || message.trim().length > 3000 || looksSpammy(message)) {
       submitBtn.disabled = false;
       return;
     }
 
-    // Submit
     const fd = new FormData(form);
+
     try {
       const res = await fetch(scriptURL, { method: 'POST', body: fd });
       const text = (await res.text()).trim().toLowerCase();
@@ -144,6 +125,5 @@
     }
   });
 </script>
-<script src="functions.js"></script>
 </body>
 </html>
